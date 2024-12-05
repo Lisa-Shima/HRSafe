@@ -2,16 +2,58 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
-  <title>IC Hello Starter</title>
-  <base href="/" />
-  <link rel="icon" href="/favicon.ico" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Data Marketplace</title>
 </head>
 
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+  <h1>Hello World!</h1>
+  <form id="greetForm">
+    <label for="name">Enter your name:</label>
+    <input type="text" id="name" required>
+    <button type="submit">Greet</button>
+  </form>
+  <div id="greeting"></div>
+
+  <script type="module">
+    import { Actor, HttpAgent } from "@dfinity/agent";
+    import { idlFactory } from "../declarations/health_data_marketplace_backend/health_data_marketplace_backend.did.js";
+
+    const canisterId = "bkyz2-fmaaa-aaaaa-qaaaq-cai"; // Replace with your canister ID
+
+    // Create an agent
+    const agent = new HttpAgent();
+
+    // Trust the root key if in local environment
+    if (process.env.DFX_NETWORK === "local") {
+      agent.fetchRootKey().catch((err) => {
+        console.error("Unable to fetch root key:", err);
+      });
+    }
+
+    const healthDataMarketplace = Actor.createActor(idlFactory, {
+      agent,
+      canisterId,
+    });
+
+    document.getElementById("greetForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+
+      try {
+        // Call the canister greet function
+        const greeting = await healthDataMarketplace.greet(name);
+
+        // Display the greeting
+        document.getElementById("greeting").innerText = greeting;
+      } catch (err) {
+        console.error("Error calling canister:", err);
+        document.getElementById("greeting").innerText = "An error occurred. Please try again.";
+      }
+    });
+
+  </script>
 </body>
 
 </html>
