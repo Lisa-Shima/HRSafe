@@ -20,6 +20,4 @@ module {
     public type Records = HashMap.HashMap<Principal, [HealthRecord]>;
 
     public type Users = HashMap.HashMap<Principal, User>;
-
-
-};
+}
