@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "health_data_marketplace_backend": {
+      "main": "src/health_data_marketplace_backend/main.mo",
+      "type": "motoko"
+    },
+    "health_data_marketplace_frontend": {
+      "dependencies": [
+        "health_data_marketplace_backend"
+      ],
+      "source": [
+        "src/health_data_marketplace_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "health_data_marketplace_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": "mops sources"
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
