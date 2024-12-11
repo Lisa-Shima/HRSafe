@@ -210,6 +210,7 @@ actor {
     };
 
     public shared ({ caller = _ }) func getPatientRecords(token : Text, patientId : Types.PatientID) : async Result.Result<[Types.MedicalRecord], Text> {
+        switch (sessionManager.getSession(token)) {
             case (null) {
                 return #err("Invalid session. Please log in.");
             };
