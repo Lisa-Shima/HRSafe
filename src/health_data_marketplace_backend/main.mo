@@ -41,15 +41,15 @@ actor {
         medicalRecordsEntries := [];
     };
 
-    public shared ({ caller }) func loginPatient(id : Types.PatientID, password : Text) : async Result.Result<Text, Text> {
+    public shared ({ caller = _ }) func loginPatient(id : Types.PatientID, password : Text) : async Result.Result<Text, Text> {
         await patientLogin.loginPatient(patients, id, password);
     };
 
-    public shared ({ caller }) func loginDoctor(id : Types.DoctorID, password : Text) : async Result.Result<Text, Text> {
+    public shared ({ caller = _  }) func loginDoctor(id : Types.DoctorID, password : Text) : async Result.Result<Text, Text> {
         await doctorLogin.loginDoctor(doctors, id, password);
     };
 
-    public shared ({ caller }) func registerPatient(
+    public shared ({ caller = _ }) func registerPatient(
         id : Types.PatientID,
         name : Text,
         age : Nat,
@@ -87,7 +87,7 @@ actor {
         await PatientRegistration.registerPatient(patients, patient);
     };
 
-    public shared ({ caller }) func registerDoctor(
+    public shared ({ caller = _ }) func registerDoctor(
         id : Types.DoctorID,
         name : Text,
         age : Nat,
@@ -127,15 +127,15 @@ actor {
         await DoctorRegistration.registerDoctor(doctors, doctor);
     };
 
-    public shared ({ caller }) func getPatient(id : Types.PatientID, token : Text) : async Result.Result<Types.Patient, Text> {
+    public shared ({ caller = _ }) func getPatient(id : Types.PatientID, token : Text) : async Result.Result<Types.Patient, Text> {
         await PatientRegistration.getPatient(patients, sessionManager, id, token);
     };
 
-    public shared ({ caller }) func getDoctor(id : Types.DoctorID, token : Text) : async Result.Result<Types.Doctor, Text> {
+    public shared ({ caller = _ }) func getDoctor(id : Types.DoctorID, token : Text) : async Result.Result<Types.Doctor, Text> {
         await DoctorRegistration.getDoctor(doctors, sessionManager, id, token);
     };
 
-    public shared ({ caller }) func getAllPatients(token : Text) : async Result.Result<[Types.Patient], Text> {
+    public shared ({ caller = _ }) func getAllPatients(token : Text) : async Result.Result<[Types.Patient], Text> {
         switch (sessionManager.getSession(token)) {
             case (null) {
                 #err("Invalid or expired session");
@@ -154,7 +154,7 @@ actor {
         };
     };
 
-    public shared ({ caller }) func searchPatients(token : Text, searchTerm : Text) : async Result.Result<[Types.Patient], Text> {
+    public shared ({ caller = _ }) func searchPatients(token : Text, searchTerm : Text) : async Result.Result<[Types.Patient], Text> {
         switch (sessionManager.getSession(token)) {
             case (null) {
                 #err("Invalid or expired session");
@@ -180,7 +180,7 @@ actor {
         };
     };
 
-    public shared ({ caller }) func addMedicalRecord(
+    public shared ({ caller = _ }) func addMedicalRecord(
         token : Text,
         patientId : Types.PatientID,
         medicalHistory : Text,
@@ -209,8 +209,7 @@ actor {
         };
     };
 
-    public shared ({ caller }) func getPatientRecords(token : Text, patientId : Types.PatientID) : async Result.Result<[Types.MedicalRecord], Text> {
-        switch (sessionManager.getSession(token)) {
+    public shared ({ caller = _ }) func getPatientRecords(token : Text, patientId : Types.PatientID) : async Result.Result<[Types.MedicalRecord], Text> {
             case (null) {
                 return #err("Invalid session. Please log in.");
             };
