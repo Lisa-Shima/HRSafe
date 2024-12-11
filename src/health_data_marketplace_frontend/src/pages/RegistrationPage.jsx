@@ -10,17 +10,13 @@ export default function RegistrationPage() {
       <div className="max-w-4xl mx-auto space-y-10">
         {/* Patient Registration */}
         <div className="bg-white shadow-lg rounded-lg p-6">
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-            Patient Registration
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4"></h2>
           <RegistrationForm role="patient" />
         </div>
 
         {/* Doctor Registration */}
         <div className="bg-white shadow-lg rounded-lg p-6">
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-            Doctor Registration
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4"></h2>
           <RegistrationForm role="doctor" />
         </div>
       </div>
